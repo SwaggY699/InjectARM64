@@ -1,7 +1,7 @@
 ext.apply {
     set("compileSdk", 35)
     set("targetSdk", 35)
-    set("minSdk", 26)
+    set("minSdk", 33)
     set("ndkVersion", "25.1.8937393")
     set("cmakeVersion", "3.22.1")
     set("ktx_version", "1.12.0")
