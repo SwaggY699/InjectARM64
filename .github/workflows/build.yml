@@ -42,7 +42,7 @@ jobs:
 
           # SDK manager'ı kullanabilmek için doğru dizine yönlendirme
           export ANDROID_HOME=$HOME/Android
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/tools/bin
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/cmdline-tools/bin  # Yeni yol
 
           # SDK ve NDK'nın gerekli bileşenlerini yükle
           yes | sdkmanager --licenses
