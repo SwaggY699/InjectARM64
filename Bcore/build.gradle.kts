@@ -60,6 +60,9 @@ android {
     packagingOptions.apply {
         excludes.add("**/libshadowhook.so")
     }
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
 }
 
 // it make update dependency update easy
