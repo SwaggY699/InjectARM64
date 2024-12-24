@@ -34,6 +34,8 @@ jobs:
           # Android SDK ve NDK'nin kurulumunu yap
           sudo apt update
           sudo apt install -y wget unzip
+
+          # Android command-line tools'ı indir ve çıkar
           wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
           mkdir -p $HOME/Android/cmdline-tools
           unzip commandlinetools-linux-8512546_latest.zip -d $HOME/Android/cmdline-tools
@@ -41,7 +43,7 @@ jobs:
           # SDK manager'ı kullanabilmek için doğru dizine yönlendirme
           export ANDROID_HOME=$HOME/Android
           export PATH=$PATH:$ANDROID_HOME/cmdline-tools/tools/bin
-          
+
           # SDK ve NDK'nın gerekli bileşenlerini yükle
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3" "ndk;22.1.7171670"
