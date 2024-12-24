@@ -26,6 +26,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'
+          distribution: 'zulu'  # Burada 'zulu' JDK dağıtımını kullanıyoruz
 
       # 3. Android SDK ve NDK kurulumu (manuel)
       - name: Set up Android SDK
