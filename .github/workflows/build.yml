@@ -26,33 +26,30 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'
-          distribution: 'zulu'  # Burada 'zulu' JDK dağıtımını kullanıyoruz
+          distribution: 'zulu'
 
-      # 3. Android SDK ve NDK kurulumu (manuel)
+      # 3. Android SDK ve NDK kurulumu
       - name: Set up Android SDK
         run: |
-          # Android SDK ve NDK'nin kurulumunu yap
           sudo apt update
           sudo apt install -y wget unzip
-
-          # Android command-line tools'ı indir ve çıkar
           wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
           mkdir -p $HOME/Android/cmdline-tools
           unzip commandlinetools-linux-8512546_latest.zip -d $HOME/Android/cmdline-tools
-
-          # SDK manager'ı kullanabilmek için doğru dizine yönlendirme
           export ANDROID_HOME=$HOME/Android
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/cmdline-tools/bin  # Yeni yol
-
-          # SDK ve NDK'nın gerekli bileşenlerini yükle
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/cmdline-tools/bin
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3" "ndk;22.1.7171670"
 
-      # 4. Gradle bağımlılıklarını yükle
+      # 4. Gradle Wrapper için çalıştırma izni ver
+      - name: Grant execute permission for Gradle Wrapper
+        run: chmod +x ./gradlew
+
+      # 5. Gradle bağımlılıklarını yükle ve projeyi derle
       - name: Build with Gradle
         run: ./gradlew clean build -PbuildType=${{ github.event.inputs.build_type }}
 
-      # 5. APK dosyasını arşivle
+      # 6. APK dosyasını arşivle
       - name: Archive APK file
         uses: actions/upload-artifact@v3
         with:
