@@ -60,9 +60,11 @@ android {
     packagingOptions.apply {
         excludes.add("**/libshadowhook.so")
     }
-    lint {
-        baseline = file("lint-baseline.xml")
+    
+    lintOptions {
+        disable 'ProtectedPermissions'
     }
+
 }
 
 // it make update dependency update easy
