@@ -1,7 +1,7 @@
 name: Build APK for InjectARM64
 
 on:
-  workflow_dispatch: # Manuel tetikleme
+  workflow_dispatch:
     inputs:
       build_type:
         description: 'Choose the build type'
@@ -17,18 +17,15 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      # 1. Reponun checkout'lanması
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. JDK 17 kurulumu
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'zulu'
 
-      # 3. Android SDK ve NDK kurulumu
       - name: Set up Android SDK
         run: |
           sudo apt update
@@ -39,17 +36,14 @@ jobs:
           export ANDROID_HOME=$HOME/Android
           export PATH=$PATH:$ANDROID_HOME/cmdline-tools/cmdline-tools/bin
           yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3" "ndk;22.1.7171670"
+          sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
-      # 4. Gradle Wrapper için çalıştırma izni ver
       - name: Grant execute permission for Gradle Wrapper
         run: chmod +x ./gradlew
 
-      # 5. Gradle bağımlılıklarını yükle ve projeyi derle
-      - name: Build with Gradle
+      - name: Build and Test
         run: ./gradlew clean build -PbuildType=${{ github.event.inputs.build_type }}
 
-      # 6. APK dosyasını arşivle
       - name: Archive APK file
         uses: actions/upload-artifact@v3
         with:
