@@ -80,6 +80,8 @@ materialThemeBuilder {
 }
 
 dependencies {
+    testImplementation("junit:junit:4.13.2")
+    
     implementation(project(":Bcore"))
 
     implementation(libs.bundles.androidx)
