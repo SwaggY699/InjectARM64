@@ -7,7 +7,6 @@ android {
     namespace = "com.vcore"
     compileSdk = (rootProject.ext["compileSdk"] as Int)
 
-
     defaultConfig {
         minSdk = (rootProject.ext["minSdk"] as Int)
         consumerProguardFiles("consumer-rules.pro")
@@ -15,11 +14,12 @@ android {
             useSupportLibrary = true
         }
 
-        ndk.apply{
+        ndk.apply {
             abiFilters.add("armeabi-v7a")
             abiFilters.add("arm64-v8a")
         }
     }
+
     val cmake = rootProject.ext["cmakeVersion"] as String
     externalNativeBuild {
         cmake {
@@ -30,7 +30,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false  //not tested yet
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -44,14 +44,17 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
     }
-    buildFeatures{
+
+    buildFeatures {
         aidl = true
         prefab = true
         viewBinding = true
@@ -60,14 +63,12 @@ android {
     packagingOptions.apply {
         excludes.add("**/libshadowhook.so")
     }
-    
-    lintOptions {
-        disable 'ProtectedPermissions'
-    }
 
+    lint {
+        disable.add("ProtectedPermissions") // Güncellenmiş lint yapılandırması
+    }
 }
 
-// it make update dependency update easy
 val ktxversion = rootProject.ext["ktx_version"] as String
 val stdlib_version = rootProject.ext["stdlib_version"] as String
 val hiddenapibypass = rootProject.ext["hiddenapibypass"] as String
